@@ -1,0 +1,12 @@
+syntax: glob
+*.ngc
+*.pyc
+*~
+*.o
+*.swp
+*.egg-info
+*.hex
+*.eep
+*.elf
+build
+dist
