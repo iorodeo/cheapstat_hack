@@ -3,6 +3,10 @@ import sys
 import time
 import serial
 
+isPython3 = sys.version_info >= (3,0)
+
+    
+
 
 class DataLogger(serial.Serial):
 
@@ -24,7 +28,10 @@ class DataLogger(serial.Serial):
         while 1:
             line = self.readline()
             line = line.strip()
+            if isPython3:
+                line = str(line,encoding='ascii')
             lineList = line.split(' ')
+
             error = False
             try:
                 secs = int(lineList[0])
