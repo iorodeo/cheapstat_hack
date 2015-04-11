@@ -1,6 +1,6 @@
 Cheapstat_hack
 
-A simple of of the cheapstat firmware to add a long duration (days) constant voltage
+A simple hack of the cheapstat firmware to add a long duration (days) constant voltage
 mode. In this mode the cheapstat streams the currrent values back to the PC as
 the data is acquired. 
 
