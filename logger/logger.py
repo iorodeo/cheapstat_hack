@@ -46,6 +46,7 @@ class DataLogger(serial.Serial):
             else:
                 print(secs,curr)
                 fid.write('{0} {1}\n'.format(secs, curr))
+            fid.flush()
 
         fid.close()
 

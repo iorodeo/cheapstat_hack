@@ -645,7 +645,7 @@ int main()
                     lcdPrintData("Duration=",9);
                     sprintf(temp_string,"%4d",profiles[profile_index].op2);
                     lcdPrintData(temp_string,4);
-                    lcdPrintData("m",3);
+                    lcdPrintData("hr",2);
                 }
                 else if(profiles[profile_index].type == CA)
                 {
@@ -698,7 +698,7 @@ int main()
                     lcdPrintData("Duration=",9);
                     sprintf(temp_string,"%4d",profiles[profile_index].op2);
                     lcdPrintData(temp_string,4);
-                    lcdPrintData("m",1);
+                    lcdPrintData("hr",2);
                 }
                 else if(profiles[profile_index].type == CA)
                 {
@@ -1464,7 +1464,7 @@ int buttonHandler(profile profiles[PROFILES_LENGTH], uint8_t* status, uint8_t* p
                 }
                 else if(profiles[*profile_index].type == CONSTVOLTLONG)
                 {
-                    if(profiles[*profile_index].op2>9)
+                    if(profiles[*profile_index].op2>1)
                         profiles[*profile_index].op2 = profiles[*profile_index].op2 - 1;
                 }
                 else if(profiles[*profile_index].type == CA)
@@ -2580,9 +2580,9 @@ int16_t CONSTVOLT_test (char* name, int16_t voltage, int16_t time) {
 }
 
 
-int16_t CONSTVOLT_long (char* name, int16_t voltage, int16_t time, uint8_t curr_range) {
-
+int16_t CONSTVOLT_long (char* name, int16_t voltage, int16_t time, uint8_t curr_range) { 
     uint32_t secCnt = 0;
+    uint32_t samplePeriod = 10;
     uint16_t elapsed;
     int16_t current_DAC;
     int16_t value_ADC;
@@ -2619,7 +2619,9 @@ int16_t CONSTVOLT_long (char* name, int16_t voltage, int16_t time, uint8_t curr_
     //start timer
     TIMER.CNT = 0;
 
-    while(secCnt < 60*time) {
+    uint32_t secCntMax = ((uint32_t) 3600)*((uint32_t) time);
+
+    while(secCnt < secCntMax) {
 
         //wait for 1 sec
         while(TIMER.CNT<31250) {}
@@ -2633,10 +2635,13 @@ int16_t CONSTVOLT_long (char* name, int16_t voltage, int16_t time, uint8_t curr_
         value_ADC = ADC_ResultCh_GetWord_Signed(&ADCA.CH1,ADC_OFFSET);
 
         // Send data via serial port
-        printUint32(secCnt,10);
-        printChar(' ');
-        printInt16(value_ADC, 10);
-        printChar('\n');
+        if (secCnt%samplePeriod == 0) 
+        {
+            printUint32(secCnt,10);
+            printChar(' ');
+            printInt16(value_ADC, 10);
+            printChar('\n');
+        }
 
         //increment elapsed
         secCnt++;
