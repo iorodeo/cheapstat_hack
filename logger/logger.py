@@ -13,7 +13,7 @@ class DataLogger(serial.Serial):
     BAUDRATE = 9600
     INIT_TIMEOUT = 1.0 
 
-    def __init__(self,port, logfile, timeout=10.0):
+    def __init__(self,port, logfile, timeout=120.0):
         super(DataLogger,self).__init__(port, self.BAUDRATE,timeout=timeout)
         time.sleep(self.INIT_TIMEOUT)
         self.logfile = logfile

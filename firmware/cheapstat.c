@@ -89,7 +89,7 @@ typedef struct {
 
 //profiles are located in both EEPROM and RAM
 profile EEMEM profilesEE[PROFILES_LENGTH] = {
-    {"ConstVoltLong  ",  CONSTVOLTLONG, -550, 1, 0, 0, 0, 0, RANGE_10UA},
+    {"ConstVoltLong  ",  CONSTVOLTLONG, -550, 480, 0, 0, 0, 0, RANGE_10UA},
     {"SWV #1         ",  SWV, 60, 0, -500, 50, 3, 0, RANGE_10UA},
     {"CV #1          ",  CV,  5000, -100, 100, 1, 1, 0, RANGE_10UA},
     //{"LSV #1         ",  LSV, 30, -800, 500, 10, 10, 0, RANGE_10UA},
@@ -2582,7 +2582,7 @@ int16_t CONSTVOLT_test (char* name, int16_t voltage, int16_t time) {
 
 int16_t CONSTVOLT_long (char* name, int16_t voltage, int16_t time, uint8_t curr_range) { 
     uint32_t secCnt = 0;
-    uint32_t samplePeriod = 10;
+    uint32_t samplePeriod = 60;
     uint16_t elapsed;
     int16_t current_DAC;
     int16_t value_ADC;
