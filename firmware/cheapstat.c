@@ -2583,6 +2583,7 @@ int16_t CONSTVOLT_test (char* name, int16_t voltage, int16_t time) {
 int16_t CONSTVOLT_long (char* name, int16_t voltage, int16_t time, uint8_t curr_range) { 
     uint32_t secCnt = 0;
     uint32_t samplePeriod = 60;
+    //uint32_t samplePeriod = 2;
     uint16_t elapsed;
     int16_t current_DAC;
     int16_t value_ADC;
@@ -2639,7 +2640,7 @@ int16_t CONSTVOLT_long (char* name, int16_t voltage, int16_t time, uint8_t curr_
         {
             printUint32(secCnt,10);
             printChar(' ');
-            printInt16(value_ADC, 10);
+            printInt16(value_ADC,10);
             printChar('\n');
         }
 
@@ -2954,10 +2955,12 @@ void printUint16(uint16_t n, uint8_t base) {
         *--str = c < 10 ? c + '0' : c + 'A' - 10;
     } while(n);
 
-    for (uint8_t i=0; i<sizeof(str); i++)
+    int i = 0;
+    while (*(str+i) != '\0')
     { 
         do{} while(!USART_IsTXDataRegisterEmpty(&USARTC0));
         USART_PutChar(&USARTC0, *(str+i));
+        i++;
     }
 }
 

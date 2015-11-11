@@ -5,7 +5,6 @@ import serial
 
 isPython3 = sys.version_info >= (3,0)
 
-    
 
 
 class DataLogger(serial.Serial):
